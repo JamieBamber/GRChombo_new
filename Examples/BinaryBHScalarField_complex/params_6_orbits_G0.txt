@@ -1,0 +1,180 @@
+# See the wiki page for an explanation of the params!
+# https://github.com/GRChombo/GRChombo/wiki/Guide-to-parameters
+
+# 
+verbosity = 0
+nan_check = 0
+
+## DATADIR = output directory
+## ICSDIR = directory with the initial conditions file
+
+chk_prefix = DATADIR/BinaryBHSFChk_
+plot_prefix =  DATADIR/BinaryBHSFPlot_
+
+restart_file = ICSDIR/6_orbits_G0/InitialConditionsFinal.3d.hdf5
+
+## restart parameters
+omega_BH = 0.0270545 # (The Newtonian value)
+input_time = 0 
+num_plot_vars = 5
+plot_vars = phi_Re chi rho C_phi Ham
+
+# Set up coarsest level number of grid points in each dir
+# NB - the values need to be multiples of block_factor
+L = 512
+N1 = 128
+N2 = 128
+N3 = 64
+
+# scalar field parameters
+G_Newton = 1
+scalar_mass = 0.373
+scalar_amplitude = 1.0
+scalar_omega = 0.373
+scalar_kappa = 0.0
+field_amplitude = 1.0
+scalar_l = 0
+scalar_m = 0
+alignment = 0
+delay = 0 # how long to keep the background fixed before letting it evolve
+phase = 0 
+
+calculate_constraints = 1
+calculate_constraint_norms = 1
+
+# Length of the longest N side
+# (This sets dx in all directions)
+scalar_center = 256.0 256.0 0.0
+center = 256.0 256.0 0.0
+extraction_center = 256.0 256.0 0.0 
+track_punctures = 1
+puncture_tracking_level = 5
+
+bh_mass_1 = 0.48711
+bh_mass_2 = 0.48711
+separation = 11
+
+# raw BH params
+massA = 0.48711
+offsetA = 5.5 0.0 0.0
+momentumA = 0.0 0.090189 0.0
+
+massB = 0.48711
+offsetB = -5.5 0.0 0.0
+momentumB =  0.0 -0.090189 0.0
+
+# regridding control, specify frequency on each level
+# so need max_level + 1 entries for interval
+regrid_threshold = 0.05 
+max_level = 8
+regrid_interval = 0 0 0 64 64 64 64 64 0
+
+# boundaries and periodicity of grid
+# Periodic directions - 0 = false, 1 = true
+isPeriodic = 0 0 0
+# if not periodic, then specify the boundary type
+# 0 = static, 1 = sommerfeld, 2 = reflective
+# 3 = extrapolating 4 = mixed
+# (see BoundaryConditions.hpp for details)
+hi_boundary = 1 1 1
+lo_boundary = 1 1 2
+## --> if using homogeneous or the full Newtonian initial data need mixed BCs in place of sommerfeld
+
+# if reflective boundaries selected, must set
+# parity of all vars (in order given by UserVariables.hpp)
+# 0 = even
+# 1,2,3 = odd x, y, z
+# 4,5,6 = odd xy, yz, xz
+vars_parity            = 0 0 4 6 0 5 0    #chi and hij
+                         0 0 4 6 0 5 0    #K and Aij
+                         0 1 2 3          #Theta and Gamma
+                         0 1 2 3 1 2 3    #lapse shift and B
+                         0 0 0 0	  # phi and Pi
+			 0 0 0 0 0 0 	  # rho, rho_azimuth, J_R, J_azimuth_R, C_t, C_phi
+                         0 1 2 3          #Ham and Mom
+                         0 0              #Weyl
+
+# if sommerfeld boundaries selected, must specify any nonzero
+# asymptotic values
+num_nonzero_asymptotic_vars = 5
+nonzero_asymptotic_vars = chi h11 h22 h33 lapse
+nonzero_asymptotic_values = 1.0 1.0 1.0 1.0 1.0
+
+# if mixed boundaries selected, must specify which are extrapolating
+# (the rest are assumed to be all sommerfeld)
+# num_extrapolating_vars = 4
+# extrapolating_vars = phi_Re Pi_Re phi_Im Pi_Im
+# extrapolation_order = 0
+
+# Max and min box sizes
+max_grid_size = 16
+block_factor = 16
+
+# Set up time steps
+# dt will be dx*dt_multiplier on each grid level
+# HDF5files are written every dt = L/N*dt_multiplier*checkpoint_interval
+
+checkpoint_interval = 200
+# set to zero to turn off plot files, comps defined in BinaryBHLevel.cpp
+plot_interval = 10
+dt_multiplier = 0.25 # ---> this may be too large
+stop_time = 10000.0
+
+# Lapse evolution
+lapse_advec_coeff = 1.0
+lapse_coeff = 2.0
+lapse_power = 1.0
+
+# Shift evolution
+shift_advec_coeff = 0.0
+shift_Gamma_coeff = 0.75
+eta = 1.0
+
+# CCZ4 parameters
+formulation = 0
+kappa1 = 0.1
+kappa2 = 0
+kappa3 = 1.0
+covariantZ4 = 1 # 0: default. 1: dampk1 -> dampk1/lapse
+
+# coefficient for KO numerical dissipation
+sigma = 1.0
+
+# Weyl 4 extraction params
+activate_Weyl_extraction = 1
+write_extraction = 0
+num_extraction_radii = 3
+extraction_radii = 100.0 150.0 200.0
+extraction_levels = 1 0 0
+num_points_phi = 24
+num_points_theta = 36
+num_modes = 3
+modes = 2 0 # l m for spherical harmonics
+        2 1
+	2 2
+        #4 0
+        #4 1
+        #4 2
+        #4 3
+        #4 4
+
+# Volume integral parameters
+activate_integral = 1
+inner_r = 10
+outer_r = 100
+
+# extraction params for phi_Re, phi_Im and flux
+activate_flux_extraction = 1
+write_extraction_2 = 0
+num_extraction_radii_2 = 4
+extraction_radii_2 = 10.0 100.0 150.0 200.0
+extraction_level_2 = 2 1 0 0
+num_modes_2 = 3
+modes_2 = 0 0
+          2 0
+          2 2
+num_points_phi_2 = 24
+num_points_theta_2 = 36
+
+# volume integral name
+integral_filename = RhoIntegral

@@ -88,9 +88,9 @@ class SimulationParameters : public SimulationParametersBase
 	pp.load("delay", delay, 0.0);
 
         // Do we want Weyl extraction and puncture tracking?
-        pp.load("activate_Weyl_extraction", activate_Weyl_extraction, false);
+        /*pp.load("activate_Weyl_extraction", activate_Weyl_extraction, false);
         pp.load("activate_flux_extraction", activate_flux_extraction, false);
-        pp.load("activate_integral", activate_integral, false);
+        pp.load("activate_integral", activate_integral, false);*/
 
         pp.load("track_punctures", track_punctures, false);
 	pp.load("puncture_tracking_level", puncture_tracking_level, max_level);
@@ -156,7 +156,8 @@ class SimulationParameters : public SimulationParametersBase
     }
 
     // Initial data
-    bool activate_Weyl_extraction, activate_flux_extraction, activate_integral, track_punctures, calculate_constraint_norms, calculate_constraints;
+    bool track_punctures, calculate_constraint_norms, calculate_constraints;
+    //bool activate_Weyl_extraction, activate_flux_extraction, activate_integra;
     int puncture_tracking_level;
     std::vector<std::array<double, CH_SPACEDIM>> initial_puncture_coords;
     double G_Newton;

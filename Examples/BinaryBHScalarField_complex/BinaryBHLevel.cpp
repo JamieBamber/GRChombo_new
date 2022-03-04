@@ -207,7 +207,7 @@ void BinaryBHLevel::specificPostTimeStep()
         }
     }
     
-    if (m_p.activate_Weyl_extraction == 1)
+    if (true) //m_p.activate_Weyl_extraction == 1)
     {
     	if (m_verbosity)
 		pout() << "calculating Weyl" << endl;
@@ -257,7 +257,7 @@ void BinaryBHLevel::specificPostTimeStep()
         BoxLoops::loop(NanCheck("NaNCheck in specific PostTimeStep: "), m_state_new,
                        m_state_new, EXCLUDE_GHOST_CELLS, disable_simd());
 
-    if (m_p.activate_flux_extraction == 1)
+    if (true) //(m_p.activate_flux_extraction == 1)
     {
 	    // At any level, but after the coarsest timestep
             int min_level = m_p.extraction_params_2.min_extraction_level();
@@ -294,7 +294,8 @@ void BinaryBHLevel::specificPostTimeStep()
 	    }
     }
 
-    if (m_p.activate_integral) {
+    if (true) //(m_p.activate_integral)
+    {
             int min_level = m_p.extraction_params_2.min_extraction_level();
 	    bool calculate_densities = at_level_timestep_multiple(min_level);
             if (calculate_densities)

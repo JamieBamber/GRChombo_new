@@ -5,7 +5,7 @@
 
 # this copy is for COSMA6
 
-work_dir=/cosma/home/dp174/dc-bamb1/GRChombo_new/Examples/BinaryBHScalarField_complex
+work_dir=/cosma/home/dp174/dc-bamb1/GRChombo/Examples/BinaryBHScalarField_complex
 cd $work_dir
 data_directory=/cosma6/data/dp174/dc-bamb1/GRChombo_data/BinaryBHSF_complex
 

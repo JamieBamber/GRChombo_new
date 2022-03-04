@@ -2,13 +2,13 @@
 # https://github.com/GRChombo/GRChombo/wiki/Guide-to-parameters
 
 # 
-verbosity = 1
-nan_check = 1
+verbosity = 0
+nan_check = 0
 
 chk_prefix = DATADIR/BinaryBHSFChk_
 plot_prefix =  DATADIR/BinaryBHSFPlot_
 
-restart_file = ICSDIR/Newtonian_cutoff_Mcloud0.1/InitialConditionsFinal.3d.hdf5       
+restart_file = /scratch/dp092/dc-bamb1/GRChombo_data/InitialConditionSolver/Newtonian_cutoff_Mcloud0.1/InitialConditionsFinal.3d.hdf5       
 
 ## restart parameters
 omega_BH = 0.0231565

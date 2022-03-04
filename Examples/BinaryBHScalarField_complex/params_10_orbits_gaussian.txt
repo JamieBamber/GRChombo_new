@@ -16,6 +16,9 @@ input_time = 2170.683050 #---> the time corresponding to six orbits, or n=1500 f
 num_plot_vars = 5
 plot_vars = phi_Re chi rho C_phi Ham
 
+## max spatial derivative
+max_spatial_derivative_order = 4
+
 # Set up coarsest level number of grid points in each dir
 # NB - the values need to be multiples of block_factor
 L = 512

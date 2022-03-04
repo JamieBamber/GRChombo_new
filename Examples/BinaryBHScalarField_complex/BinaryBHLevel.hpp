@@ -6,11 +6,10 @@
 #ifndef BINARYBHLEVEL_HPP_
 #define BINARYBHLEVEL_HPP_
 
-#include "BHAMR.hpp"
 #include "DefaultLevelFactory.hpp"
 #include "GRAMRLevel.hpp"
-#include "ComplexScalarPotential.hpp"
-#include "ComplexScalarField.hpp"
+// TPAMR.hpp includes BHAMR.hpp
+#include "TPAMR.hpp"
 
 class BinaryBHLevel : public GRAMRLevel
 {
@@ -22,7 +21,6 @@ class BinaryBHLevel : public GRAMRLevel
 #ifdef USE_TWOPUNCTURES
     TPAMR &m_tp_amr = dynamic_cast<TPAMR &>(m_gr_amr);
 #endif /* USE_TWOPUNCTURES */
-
 
     // Typedef for scalar field
     typedef ComplexScalarField<ComplexScalarPotential> ScalarFieldWithPotential;
@@ -54,10 +52,8 @@ class BinaryBHLevel : public GRAMRLevel
     // to do post each time step on every level
     virtual void specificPostTimeStep() override;
 
-//#ifdef CH_USE_HDF5
     /// Any actions that should happen just before plot files output
     virtual void prePlotLevel() override;
-//#endif /* CH_USE_HDF5 */
 };
 
 #endif /* BINARYBHLEVEL_HPP_ */

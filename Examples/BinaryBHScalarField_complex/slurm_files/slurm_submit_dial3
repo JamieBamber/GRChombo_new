@@ -14,7 +14,7 @@
 ###SBATCH --ntasks=128
 
 # run for time hh:mm:ss
-#SBATCH --time=1:00:00
+#SBATCH --time=0:05:00
 
 # turn on all mail notification
 #SBATCH --mail-type=NONE
@@ -41,7 +41,7 @@ export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
 export OMP_PLACES=cores
 
 # we execute the job and time it
-export application=/home/dc-bamb1/GRChombo_binaries/Examples/BinaryBHScalarField_complex/Main_BinaryBH3d.Linux.64.CC.ftn.OPTHIGH.MPI.OPENMPCC.ex 
+export application=/home/dc-bamb1/GRChombo_new/Examples/BinaryBHScalarField_complex/Main_BinaryBH3d.Linux.64.CC.ftn.OPTHIGH.MPI.OPENMPCC.ex 
 time srun --distribution=block:block --hint=nomultithread $application ../params.txt
 
 # Finish the script and Exit.

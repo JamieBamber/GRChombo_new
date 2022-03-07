@@ -2,8 +2,8 @@
 # https://github.com/GRChombo/GRChombo/wiki/Guide-to-parameters
 
 # 
-verbosity = 0
-nan_check = 0
+verbosity = 1
+nan_check = 1
 
 chk_prefix = DATADIR/BinaryBHSFChk_
 plot_prefix =  DATADIR/BinaryBHSFPlot_
@@ -136,7 +136,8 @@ covariantZ4 = 1 # 0: default. 1: dampk1 -> dampk1/lapse
 sigma = 1.0
 
 # Weyl 4 extraction params
-activate_Weyl_extraction = 1
+activate_extraction = 1
+#activate_Weyl_extraction = 1
 write_extraction = 0
 num_extraction_radii = 3
 extraction_radii = 100.0 150.0 200.0
@@ -154,12 +155,12 @@ modes = 2 0 # l m for spherical harmonics
         #4 4
 
 # Volume integral parameters
-activate_integral = 1
+#activate_integral = 1
 inner_r = 10
 outer_r = 100
 
 # extraction params for phi_Re, phi_Im and flux
-activate_flux_extraction = 1
+#activate_flux_extraction = 1
 write_extraction_2 = 0
 num_extraction_radii_2 = 4
 extraction_radii_2 = 10.0 100.0 150.0 200.0

@@ -211,24 +211,24 @@ void BinaryBHLevel::specificPostTimeStep()
         if (calculate_constraints){
             ComplexScalarPotential potential(m_p.potential_params);
             ScalarFieldWithPotential scalar_field(potential);
-	        BoxLoops::loop(MatterConstraints<ScalarFieldWithPotential>(scalar_field, m_dx, m_p.G_Newton, c_Ham, Interval(c_Mom1, c_Mom3)), m_state_new, m_state_diagnostics,
+	    BoxLoops::loop(MatterConstraints<ScalarFieldWithPotential>(scalar_field, m_dx, m_p.G_Newton, c_Ham, Interval(c_Mom1, c_Mom3)), m_state_new, m_state_diagnostics,
         	               EXCLUDE_GHOST_CELLS);
-        }
-	    if (m_level == 0 && m_p.calculate_constraint_norms)
-        {
-            AMRReductions<VariableType::diagnostic> amr_reductions(m_gr_amr);
-            double L2_Ham = amr_reductions.norm(c_Ham);
-            double L2_Mom = amr_reductions.norm(Interval(c_Mom1, c_Mom3));
-            SmallDataIO constraints_file("constraint_norms", m_dt, m_time,
-                                         m_restart_time, SmallDataIO::APPEND,
-                                         first_step);
-            constraints_file.remove_duplicate_time_data();
-            if (first_step)
-            {
-                constraints_file.write_header_line({"L^2_Ham", "L^2_Mom"});
-            }
-            constraints_file.write_time_data_line({L2_Ham, L2_Mom});
-        }
+		if (m_level == 0 && m_p.calculate_constraint_norms)
+        	{
+            	AMRReductions<VariableType::diagnostic> amr_reductions(m_gr_amr);
+            	double L2_Ham = amr_reductions.norm(c_Ham);
+            	double L2_Mom = amr_reductions.norm(Interval(c_Mom1, c_Mom3));
+            	SmallDataIO constraints_file("constraint_norms", m_dt, m_time,
+                                         	m_restart_time, SmallDataIO::APPEND,
+                                         	first_step);
+            	constraints_file.remove_duplicate_time_data();
+            	if (first_step)
+            	{
+                	constraints_file.write_header_line({"L^2_Ham", "L^2_Mom"});
+            	}
+            	constraints_file.write_time_data_line({L2_Ham, L2_Mom});
+        	}
+	}
     }
     
     // do puncture tracking on requested level
@@ -244,48 +244,52 @@ void BinaryBHLevel::specificPostTimeStep()
                                                    write_punctures);
     }
 
-    if (true) //(m_p.activate_flux_extraction == 1)
+    if (false) //(m_p.activate_flux_extraction == 1)
     {
-	    // At any level, but after the coarsest timestep
-        int min_level = m_p.extraction_params_2.min_extraction_level();
-	    bool calculate_densities = at_level_timestep_multiple(min_level);
-	    if (calculate_densities)
-	    {
-	     	// Calculate energy and angular momentum fluxes and densities
-	    	ComplexScalarPotential potential(m_p.potential_params);
-	    	ScalarFieldWithPotential scalar_field(potential);
-		    if (m_verbosity)
-                pout() << "Now making densities and momenta" << endl;
-	    	BoxLoops::loop(DensityAndMomAndSourceTerm<ScalarFieldWithPotential>(
-	                       	scalar_field, m_dx, m_p.center, 0, m_p.ccz4_params),
-	                   	m_state_new, m_state_diagnostics, EXCLUDE_GHOST_CELLS);
-	    }
-
-	    if (m_level == 0)
-	    {
-            // fill only specific ghosts
-            bool fill_ghosts = false;
-            m_gr_amr.m_interpolator->refresh(fill_ghosts);
-            m_gr_amr.fill_multilevel_ghosts(
-                VariableType::diagnostic, Interval(c_Weyl4_Re, c_Weyl4_Im),
-                min_level);
-		    //
-	 	    if (m_verbosity)
-		           pout() << "now doing flux integrals" << endl;
-	        ForceExtraction my_flux_extraction(m_p.extraction_params_2, m_dt, m_time,
-	                                      "Force_integrals", m_restart_time);
-	        my_flux_extraction.execute_query(m_gr_amr.m_interpolator);
-		    if (m_verbosity)
-                       pout() << "now doing phi integrals" << endl;
-		    PhiExtraction my_phi_extraction(m_p.extraction_params_2, "", "", m_dt, m_time, m_restart_time);
-		    my_phi_extraction.execute_query(m_gr_amr.m_interpolator);		
-	    }
+	// At any level, but after the coarsest timestep
+	if (m_verbosity)
+                    pout() << "starting flux extraction section" << endl;
+        int min_level = 0; //m_p.extraction_params_2.min_extraction_level();
+	bool calculate_densities = at_level_timestep_multiple(min_level);
+	if (calculate_densities)
+	{
+		// Calculate energy and angular momentum fluxes and densities
+		ComplexScalarPotential potential(m_p.potential_params);
+		ScalarFieldWithPotential scalar_field(potential);
+		if (m_verbosity)
+        	pout() << "Now making densities and momenta" << endl;
+		BoxLoops::loop(DensityAndMomAndSourceTerm<ScalarFieldWithPotential>(
+	                	scalar_field, m_dx, m_p.center, 0, m_p.ccz4_params),
+	                	m_state_new, m_state_diagnostics, EXCLUDE_GHOST_CELLS);
+	}
+	
+	if (m_level == 0)
+	{
+    	// fill only specific ghosts
+    	bool fill_ghosts = false;
+    	m_gr_amr.m_interpolator->refresh(fill_ghosts);
+    	m_gr_amr.fill_multilevel_ghosts(
+        	VariableType::diagnostic, Interval(c_Weyl4_Re, c_Weyl4_Im),
+        	min_level);
+		//
+	 	if (m_verbosity)
+		   	pout() << "now doing flux integrals" << endl;
+		ForceExtraction my_flux_extraction(m_p.extraction_params_2, m_dt, m_time,
+	                              	"Force_integrals", m_restart_time);
+		my_flux_extraction.execute_query(m_gr_amr.m_interpolator);
+		if (m_verbosity)
+               	pout() << "now doing phi integrals" << endl;
+		PhiExtraction my_phi_extraction(m_p.extraction_params_2, "", "", m_dt, m_time, m_restart_time);
+		my_phi_extraction.execute_query(m_gr_amr.m_interpolator);		
+	}
     }
 
-    if (true) //(m_p.activate_integral)
+    if (false) //(m_p.activate_integral)
     {
-        int min_level = m_p.extraction_params_2.min_extraction_level();
-	    bool calculate_densities = at_level_timestep_multiple(min_level);
+        if (m_verbosity)
+                    pout() << "starting integral section" << endl;
+	int min_level = 0; 
+	bool calculate_densities = at_level_timestep_multiple(min_level);
         if (calculate_densities)
 	    {
 	        // Now, over all levels, we instead exclude an inner sphere around the black holes

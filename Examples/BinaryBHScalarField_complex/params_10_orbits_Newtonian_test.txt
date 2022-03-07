@@ -8,7 +8,7 @@ nan_check = 1
 chk_prefix = DATADIR/BinaryBHSFChk_
 plot_prefix =  DATADIR/BinaryBHSFPlot_
 
-restart_file = /scratch/dp092/dc-bamb1/GRChombo_data/InitialConditionSolver/Newtonian_cutoff_Mcloud0.1/InitialConditionsFinal.3d.hdf5       
+restart_file = ICSDIR/Newtonian_cutoff_Mcloud0.1/InitialConditionsFinal.3d.hdf5       
 
 ## restart parameters
 omega_BH = 0.0231565
@@ -38,8 +38,8 @@ alignment = 0
 delay = 0 # how long to keep the background fixed before letting it evolve
 phase = 0 
 
-calculate_constraints = 1
-calculate_constraint_norms = 1
+calculate_constraints = 0
+calculate_constraint_norms = 0
 
 # Length of the longest N side
 # (This sets dx in all directions)
@@ -136,7 +136,7 @@ covariantZ4 = 1 # 0: default. 1: dampk1 -> dampk1/lapse
 sigma = 1.0
 
 # Weyl 4 extraction params
-activate_extraction = 1
+activate_extraction = 0
 #activate_Weyl_extraction = 1
 write_extraction = 0
 num_extraction_radii = 3

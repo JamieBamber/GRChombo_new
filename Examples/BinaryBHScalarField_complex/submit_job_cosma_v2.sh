@@ -5,7 +5,7 @@
 
 # this copy is for COSMA6
 
-work_dir=/cosma/home/dp174/dc-bamb1/GRChombo/Examples/BinaryBHScalarField_complex
+work_dir=/cosma/home/dp174/dc-bamb1/GRChombo_new/Examples/BinaryBHScalarField_complex
 cd $work_dir
 data_directory=/cosma6/data/dp174/dc-bamb1/GRChombo_data/BinaryBHSF_complex
 
@@ -18,7 +18,7 @@ run0002=(params_10_orbits_gaussian_kappa0.0125.txt Gaussian_Mcloud0.1_kappa0.012
 run0102=(params_10_orbits_gaussian_kappa0.02.txt Gaussian_Mcloud0.1_kappa0.02)
 run0004=(params_10_orbits_Newtonian.txt Newtonian_cutoff_Mcloud0.1)
 run0106=(params_6_orbits_G0.txt 6_orbits_G0)
-run0104=(params_10_orbits_Newtonian_test.txt Newtonian_cutoff_test)
+run0104=(params_10_orbits_Newtonian_test.txt Newtonian_cutoff_test_GRChombo_new)
 
 run_list=(
 	run0104

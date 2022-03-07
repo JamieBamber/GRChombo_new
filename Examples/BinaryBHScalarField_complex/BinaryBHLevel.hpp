@@ -10,6 +10,8 @@
 #include "GRAMRLevel.hpp"
 // TPAMR.hpp includes BHAMR.hpp
 #include "TPAMR.hpp"
+#include "ComplexScalarPotential.hpp"
+#include "ComplexScalarField.hpp"
 
 class BinaryBHLevel : public GRAMRLevel
 {
@@ -52,8 +54,10 @@ class BinaryBHLevel : public GRAMRLevel
     // to do post each time step on every level
     virtual void specificPostTimeStep() override;
 
+#ifdef CH_USE_HDF5
     /// Any actions that should happen just before plot files output
     virtual void prePlotLevel() override;
+#endif /* CH_USE_HDF5 */
 };
 
 #endif /* BINARYBHLEVEL_HPP_ */

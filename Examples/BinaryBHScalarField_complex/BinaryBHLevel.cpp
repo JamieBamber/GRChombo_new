@@ -206,7 +206,7 @@ void BinaryBHLevel::specificPostTimeStep()
 	    if (m_verbosity)
 		    pout() << "calculating constraints" << endl;
 	    // At any level, but after the coarsest timestep
-        int min_level = m_p.extraction_params.min_extraction_level();
+        int min_level = 0; //m_p.extraction_params.min_extraction_level();
         bool calculate_constraints = at_level_timestep_multiple(min_level);
         if (calculate_constraints){
             ComplexScalarPotential potential(m_p.potential_params);
@@ -244,7 +244,7 @@ void BinaryBHLevel::specificPostTimeStep()
                                                    write_punctures);
     }
 
-    if (false) //(m_p.activate_flux_extraction == 1)
+    if (m_p.activate_flux_extraction == 1)
     {
 	// At any level, but after the coarsest timestep
 	if (m_verbosity)
@@ -284,7 +284,7 @@ void BinaryBHLevel::specificPostTimeStep()
 	}
     }
 
-    if (false) //(m_p.activate_integral)
+    if (m_p.activate_integral)
     {
         if (m_verbosity)
                     pout() << "starting integral section" << endl;
